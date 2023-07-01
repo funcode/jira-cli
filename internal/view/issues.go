@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"strings"
+	"encoding/json"
 	"text/tabwriter"
 
 	"github.com/ankitpokhrel/jira-cli/api"
@@ -215,8 +216,50 @@ func (*IssueList) assignColumns(columns []string, issue *jira.Issue) []string {
 			bucket = append(bucket, formatDateTime(issue.Fields.Updated, jira.RFC3339))
 		case fieldLabels:
 			bucket = append(bucket, strings.Join(issue.Fields.Labels, ","))
+		case fieldEpic:
+			jsonStr := os.Getenv("JIRA_EPICS_LIST")
+			//jsonStr := "[{\"key\":\"GPCC-318\", \"name\":\"GPCC-New-RG\"}, {\"key\":\"GPCC-293\", \"name\":\"GPCC-Alert\"}]"
+			searchKey := issue.Fields.Epic
+
+			var data []jira.KeyName
+			var searchValue string
+
+			err := json.Unmarshal([]byte(jsonStr), &data)
+			if err != nil {
+				searchValue="BadJson"
+			}
+
+			for _, kv := range data {
+				if kv.Key == searchKey {
+					searchValue = kv.Name
+					break
+				}
+			}
+
+			bucket = append(bucket, searchValue)
+		//case fieldSprint:
+		//		// Extract the JSON part from the string
+		//		if  len(issue.Fields.Sprint)>0 {
+		//      // The returned object is a Java object array
+		//      // TODO iterate the array
+		//		  str := issue.Fields.Sprint[0]
+    //	    jsonStr := str[strings.Index(str, "[")+1 : strings.LastIndex(str, "]")]
+    //
+    //	    // Create an instance of the struct
+		//      // The returned JSON object is not same with jira.Sprint
+    //	    //sprint := jira.Sprint{}
+    //
+    //	    // Unmarshal the JSON string into the struct
+		//      // TODO check the status and ignore closed ones 
+    //	    err := json.Unmarshal([]byte(jsonStr), &sprint)
+    //	    // Print the result
+		//			if err == nil {
+  	//	      bucket = append(bucket, sprint.Name )
+		//			}else{
+		//			  bucket = append(bucket, "bad")
+		//			}
+  	//    }
 		}
 	}
-
 	return bucket
 }

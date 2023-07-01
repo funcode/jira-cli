@@ -71,6 +71,8 @@ func ValidIssueColumns() []string {
 		fieldCreated,
 		fieldUpdated,
 		fieldLabels,
+		fieldEpic,
+		//fieldSprint,
 	}
 }
 

@@ -62,7 +62,7 @@ func Info(msg string) *spinner.Spinner {
 		refreshRate,
 		spinner.WithSuffix(" "+msg),
 		spinner.WithHiddenCursor(true),
-		spinner.WithWriter(color.Error),
+		spinner.WithWriterFile(color.Error.(*os.File)),
 	)
 	s.Start()
 

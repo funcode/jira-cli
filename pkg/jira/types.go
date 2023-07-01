@@ -47,6 +47,12 @@ type Epic struct {
 	Link string `json:"link"`
 }
 
+// KeyMap holds key-name map
+type KeyName struct {
+	Key string `json:"key"`
+	Name string `json:"name"`
+}
+
 // Issue holds issue info.
 type Issue struct {
 	Key    string      `json:"key"`
@@ -58,6 +64,8 @@ type IssueFields struct {
 	Summary     string      `json:"summary"`
 	Description interface{} `json:"description"` // string in v1/v2, adf.ADF in v3
 	Labels      []string    `json:"labels"`
+	Epic        string      `json:"customfield_10830"`
+	Sprint      []string    `json:"customfield_10730"`
 	Resolution  struct {
 		Name string `json:"name"`
 	} `json:"resolution"`

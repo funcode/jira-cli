@@ -18,4 +18,6 @@ const (
 	fieldEndDate      = "END"
 	fieldCompleteDate = "COMPLETE"
 	fieldLabels       = "LABELS"
+	fieldEpic         = "EPIC"
+	fieldSprint       = "SPRINT"
 )

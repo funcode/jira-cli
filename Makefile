@@ -24,8 +24,8 @@ VERSION_PKG = github.com/ankitpokhrel/jira-cli/internal/version
 export LDFLAGS += -X $(VERSION_PKG).GitCommit=$(GIT_COMMIT)
 export LDFLAGS += -X $(VERSION_PKG).SourceDateEpoch=$(SOURCE_DATE_EPOCH)
 export LDFLAGS += -X $(VERSION_PKG).Version=$(VERSION)
-export LDFLAGS += -s
-export LDFLAGS += -w
+#export LDFLAGS += -s
+#export LDFLAGS += -w
 
 export CGO_ENABLED ?= 0
 export GOCACHE ?= $(CURDIR)/.gocache
